@@ -5,7 +5,7 @@ struct MenuBarLabel: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            if let icon = CodexBrandArtwork.image {
+            if let icon = MeterArtwork.image {
                 Image(nsImage: icon)
                     .resizable()
                     .interpolation(.high)
@@ -13,7 +13,7 @@ struct MenuBarLabel: View {
                     .frame(width: 18, height: 18)
                     .accessibilityHidden(true)
             } else {
-                Image(systemName: "chevron.left.forwardslash.chevron.right")
+                Image(systemName: "gauge.with.dots.needle.50percent")
                     .accessibilityHidden(true)
             }
             Text(store.menuBarText)
@@ -43,7 +43,7 @@ struct UsagePopover: View {
 
     private var header: some View {
         HStack(spacing: 10) {
-            CodexBrandIcon(size: 32)
+            MeterIcon(size: 32)
 
             VStack(alignment: .leading, spacing: 1) {
                 Text("Codex Usage").font(.headline)

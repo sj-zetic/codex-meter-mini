@@ -76,8 +76,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return "\(window.remainingPercent) percent remaining"
         } ?? "Unavailable")
 
-        guard let source = CodexBrandArtwork.image?.copy() as? NSImage else {
-            button.image = NSImage(systemSymbolName: "chevron.left.forwardslash.chevron.right", accessibilityDescription: nil)
+        guard let source = MeterArtwork.image?.copy() as? NSImage else {
+            button.image = NSImage(systemSymbolName: "gauge.with.dots.needle.50percent", accessibilityDescription: nil)
             return
         }
         source.size = NSSize(width: 18, height: 18)

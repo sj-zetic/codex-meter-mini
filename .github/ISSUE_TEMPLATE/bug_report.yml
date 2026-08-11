@@ -1,0 +1,61 @@
+name: Bug report
+description: Report reproducible incorrect behavior in Codex Meter
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Do not include tokens, cookies, or private account information.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Launch Codex Meter
+        2. …
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: macOS 15.6
+    validations:
+      required: true
+  - type: input
+    id: codex
+    attributes:
+      label: ChatGPT, Codex, or CLI version
+      description: Include the installation type and version if known.
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: Codex Meter installation
+      options:
+        - Built from source
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized diagnostics
+      description: Include only relevant error text with all private information removed.
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed credentials, tokens, cookies, and private account data.
+          required: true
