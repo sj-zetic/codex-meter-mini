@@ -55,7 +55,7 @@ final class UsageStore: NSObject, ObservableObject {
         guard let window = state.snapshot?.mostConstrained else { return "—" }
         guard let resetsAt = window.resetsAt else { return "\(window.remainingPercent)%" }
         let countdown = ResetCountdownFormatter.string(until: resetsAt)
-        let firstUnit = countdown.split(whereSeparator: \Character.isWhitespace).first.map(String.init) ?? countdown
+        let firstUnit = countdown.split { $0.isWhitespace }.first.map(String.init) ?? countdown
         return "\(window.remainingPercent)% · \(firstUnit)"
     }
 
