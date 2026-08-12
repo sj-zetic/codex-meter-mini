@@ -18,6 +18,10 @@ An unofficial, native macOS menu-bar utility that shows the remaining usage for 
 
 The menu-bar percentage is the **most constrained available limit**: whichever reported window has the lowest remaining percentage. Open the popover to see every available window separately.
 
+On a crowded menu bar—especially a MacBook display with a notch—the label automatically shortens from the full countdown to one reset unit, then to the percentage, and finally to the Codex icon alone when necessary. The complete percentage and reset time remain available in the tooltip, accessibility value, and popover.
+
+The status item has a stable macOS position identifier, so its placement survives restarts and display changes. Hold Command while dragging the item to choose a different permanent position. If you use Ice or another menu-bar manager, keep Codex Meter in that manager's visible section.
+
 ## Compatibility notice
 
 Codex Meter launches the locally installed `codex app-server` and reads `account/rateLimits/read`. This interface is experimental and is not a public compatibility promise. A ChatGPT or Codex update may temporarily break the app.
@@ -53,7 +57,7 @@ The locally built app is ad-hoc signed. macOS may ask you to confirm the first l
 
 ### The menu item is missing
 
-- Codex Meter automatically restores its status item after a monitor is connected or disconnected. If it does not return within a second, quit and reopen the app and include your display setup in a bug report.
+- Codex Meter retries placement while macOS settles the new menu-bar layout and automatically shortens its label if the built-in display has less room. If it does not return within several seconds, quit and reopen the app and include your display setup in a bug report.
 - Check whether the camera notch or other menu-bar items have pushed it out of view.
 - Temporarily close another menu-bar utility to make room.
 
