@@ -53,7 +53,7 @@ The locally built app is ad-hoc signed. macOS may ask you to confirm the first l
 
 ### The menu item is missing
 
-- Quit and reopen Codex Meter after changing monitor connections.
+- Codex Meter automatically restores its status item after a monitor is connected or disconnected. If it does not return within a second, quit and reopen the app and include your display setup in a bug report.
 - Check whether the camera notch or other menu-bar items have pushed it out of view.
 - Temporarily close another menu-bar utility to make room.
 
