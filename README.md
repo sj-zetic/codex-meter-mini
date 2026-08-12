@@ -73,6 +73,6 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 
 ## License and trademarks
 
-The source code and original Codex Meter artwork are available under the [MIT License](LICENSE).
+The source code is available under the [MIT License](LICENSE). The bundled Codex icon is OpenAI artwork, is not covered by the MIT License, and remains subject to OpenAI's applicable trademark and brand terms. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-OpenAI, ChatGPT, and Codex are trademarks of OpenAI. Their use here is solely to identify compatibility with the relevant service. No OpenAI logos or artwork are distributed by this project.
+OpenAI, ChatGPT, Codex, and the Codex icon are trademarks or other intellectual property of OpenAI. Their use here identifies compatibility with the relevant service and does not imply endorsement.

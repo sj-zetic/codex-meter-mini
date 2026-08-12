@@ -7,7 +7,7 @@ Thanks for helping improve Codex Meter. Small, focused pull requests are easiest
 - Search existing issues before opening a new one.
 - Open an issue before making a large behavior, architecture, or visual-design change.
 - Do not include credentials, account data, or output containing private user information.
-- Keep the project independent: do not add OpenAI, ChatGPT, or Codex logos or other third-party artwork.
+- Keep the project independent. Do not modify, relicense, or add third-party artwork without documenting its provenance and applicable terms.
 
 ## Development setup
 
@@ -48,4 +48,4 @@ open "dist/Codex Meter.app"
 - Treat the local app-server response as untrusted input and fail safely.
 - Preserve backward compatibility where practical because the local interface is experimental.
 
-By contributing, you agree that your contribution is licensed under the MIT License.
+By contributing, you agree that your contribution is licensed under the MIT License. This does not apply to third-party material identified in `THIRD_PARTY_NOTICES.md`.
