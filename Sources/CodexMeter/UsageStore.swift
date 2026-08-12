@@ -3,7 +3,7 @@ import Combine
 import Foundation
 
 @MainActor
-final class UsageStore: ObservableObject {
+final class UsageStore: NSObject, ObservableObject {
     @Published private(set) var state: UsageState = .loading
     @Published private(set) var isRefreshing = false
     @Published private(set) var lastError: String?
@@ -17,9 +17,10 @@ final class UsageStore: ObservableObject {
     private let service = CodexUsageService()
     private var timer: Timer?
 
-    init() {
+    override init() {
         let stored = UserDefaults.standard.double(forKey: "refreshInterval")
         refreshInterval = stored > 0 ? stored : 60
+        super.init()
         service.onSnapshot = { [weak self] snapshot in
             self?.state = .ready(snapshot)
             self?.isRefreshing = false
@@ -71,9 +72,17 @@ final class UsageStore: ObservableObject {
 
     private func scheduleRefresh() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.refresh() }
-        }
+        timer = Timer.scheduledTimer(
+            timeInterval: refreshInterval,
+            target: self,
+            selector: #selector(refreshTimerFired(_:)),
+            userInfo: nil,
+            repeats: true
+        )
         timer?.tolerance = min(5, refreshInterval * 0.1)
+    }
+
+    @objc private func refreshTimerFired(_ timer: Timer) {
+        refresh()
     }
 }

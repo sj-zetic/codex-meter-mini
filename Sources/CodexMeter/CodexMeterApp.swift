@@ -22,9 +22,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let popover = NSPopover()
     private var statusItem: NSStatusItem?
     private var cancellables = Set<AnyCancellable>()
+    private var isObservingStore = false
+    private var isObservingDisplayChanges = false
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         installStatusItem()
+        observeDisplayChangesIfNeeded()
     }
 
     func installStatusItem() {
@@ -46,15 +49,55 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             button.setAccessibilityLabel("Codex usage")
         }
 
-        Publishers.CombineLatest(store.$state, store.$isRefreshing)
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _, _ in self?.updateStatusItem() }
-            .store(in: &cancellables)
+        observeStoreIfNeeded()
         updateStatusItem()
     }
 
     func applicationWillTerminate(_ notification: Notification) {
+        NSObject.cancelPreviousPerformRequests(
+            withTarget: self,
+            selector: #selector(reinstallStatusItemAfterDisplayChange),
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(self)
         if let statusItem { NSStatusBar.system.removeStatusItem(statusItem) }
+    }
+
+    private func observeStoreIfNeeded() {
+        guard isObservingStore == false else { return }
+        isObservingStore = true
+        Publishers.CombineLatest(store.$state, store.$isRefreshing)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _, _ in self?.updateStatusItem() }
+            .store(in: &cancellables)
+    }
+
+    private func observeDisplayChangesIfNeeded() {
+        guard isObservingDisplayChanges == false else { return }
+        isObservingDisplayChanges = true
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(displayConfigurationDidChange(_:)),
+            name: NSApplication.didChangeScreenParametersNotification,
+            object: nil
+        )
+    }
+
+    @objc private func displayConfigurationDidChange(_ notification: Notification) {
+        NSObject.cancelPreviousPerformRequests(
+            withTarget: self,
+            selector: #selector(reinstallStatusItemAfterDisplayChange),
+            object: nil
+        )
+        perform(#selector(reinstallStatusItemAfterDisplayChange), with: nil, afterDelay: 0.75)
+    }
+
+    @objc private func reinstallStatusItemAfterDisplayChange() {
+        popover.performClose(nil)
+        if let statusItem { NSStatusBar.system.removeStatusItem(statusItem) }
+        statusItem = nil
+        installStatusItem()
+        statusItem?.isVisible = true
     }
 
     @objc private func togglePopover(_ sender: NSStatusBarButton) {
