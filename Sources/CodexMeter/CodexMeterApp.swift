@@ -46,6 +46,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         scheduleStatusItemRecovery(resetDensity: false)
     }
 
+    func applicationDidBecomeActive(_ notification: Notification) {
+        scheduleStatusItemRecovery(resetDensity: false)
+    }
+
     func installStatusItem() {
         guard statusItem == nil else { return }
         if UserDefaults.standard.object(forKey: Self.preferredPositionKey) == nil {

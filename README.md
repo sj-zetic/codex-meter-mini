@@ -15,6 +15,7 @@ An unofficial, native macOS menu-bar utility that shows the remaining usage for 
 - Session and weekly rolling limits in an accessible SwiftUI popover.
 - The account plan and credit balance when the local Codex service provides them.
 - Automatic refresh every minute by default, with 15-second and 5-minute options.
+- Automatic launch at login and recovery after an abnormal exit when installed with `make install`.
 
 The menu-bar percentage is the **most constrained available limit**: whichever reported window has the lowest remaining percentage. Open the popover to see every available window separately.
 
@@ -47,16 +48,16 @@ Codex Meter looks for the executable in the ChatGPT and Codex application bundle
 git clone https://github.com/sj-zetic/codex-meter.git
 cd codex-meter
 make test
-make app
-open "dist/Codex Meter.app"
+make install
 ```
 
-The locally built app is ad-hoc signed. macOS may ask you to confirm the first launch. Public binary distribution requires Developer ID signing and Apple notarization.
+`make install` builds the app, copies it to `/Applications`, installs a per-user LaunchAgent, and starts it. The agent starts Codex Meter at login and restarts it after an abnormal exit, but respects **Quit Codex Meter**. Run `make uninstall` to remove both the app and agent. The locally built app is ad-hoc signed, so macOS may ask you to confirm the first launch. Public binary distribution requires Developer ID signing and Apple notarization.
 
 ## Troubleshooting
 
 ### The menu item is missing
 
+- If you built from source, run `make install` so the per-user LaunchAgent can restore Codex Meter after login or an abnormal exit.
 - Codex Meter retries placement while macOS settles the new menu-bar layout and automatically shortens its label if the built-in display has less room. If it does not return within several seconds, quit and reopen the app and include your display setup in a bug report.
 - Check whether the camera notch or other menu-bar items have pushed it out of view.
 - Temporarily close another menu-bar utility to make room.
