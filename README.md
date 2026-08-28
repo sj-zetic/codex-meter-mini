@@ -16,6 +16,7 @@ An unofficial, native macOS menu-bar utility that shows the remaining usage for 
 - The account plan and credit balance when the local Codex service provides them.
 - Automatic refresh every minute by default, with 15-second and 5-minute options.
 - Automatic launch at login and recovery after an abnormal exit when installed with `make install`.
+- Automatic reconnection when the local Codex service stops responding.
 
 The menu-bar percentage is the **most constrained available limit**: whichever reported window has the lowest remaining percentage. Open the popover to see every available window separately.
 
@@ -67,6 +68,7 @@ make install
 - Open ChatGPT or Codex and confirm that you are signed in.
 - Confirm that `codex` is installed at one of the supported locations or available on `PATH`.
 - Click **Try Again** or use the refresh button after signing in.
+- Codex Meter automatically restarts an unresponsive local connection once. If syncing still fails, quit and reopen Codex Meter, then include the displayed error in a bug report.
 
 ### A Codex update broke the app
 
