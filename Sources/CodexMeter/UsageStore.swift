@@ -3,7 +3,7 @@ import Combine
 import Foundation
 
 @MainActor
-final class UsageStore: ObservableObject {
+final class UsageStore: NSObject, ObservableObject {
     @Published private(set) var state: UsageState = .loading
     @Published private(set) var isRefreshing = false
     @Published private(set) var lastError: String?
@@ -17,9 +17,10 @@ final class UsageStore: ObservableObject {
     private let service = CodexUsageService()
     private var timer: Timer?
 
-    init() {
+    override init() {
         let stored = UserDefaults.standard.double(forKey: "refreshInterval")
         refreshInterval = stored > 0 ? stored : 60
+        super.init()
         service.onSnapshot = { [weak self] snapshot in
             self?.state = .ready(snapshot)
             self?.isRefreshing = false
@@ -50,6 +51,19 @@ final class UsageStore: ObservableObject {
         return "\(window.remainingPercent)% · \(countdown)"
     }
 
+    var compactMenuBarText: String {
+        guard let window = state.snapshot?.mostConstrained else { return "—" }
+        guard let resetsAt = window.resetsAt else { return "\(window.remainingPercent)%" }
+        let countdown = ResetCountdownFormatter.string(until: resetsAt)
+        let firstUnit = countdown.split { $0.isWhitespace }.first.map(String.init) ?? countdown
+        return "\(window.remainingPercent)% · \(firstUnit)"
+    }
+
+    var minimalMenuBarText: String {
+        guard let window = state.snapshot?.mostConstrained else { return "—" }
+        return "\(window.remainingPercent)%"
+    }
+
     var menuBarSymbol: String {
         guard let percentage = state.snapshot?.mostConstrained?.remainingPercent else { return "gauge.with.dots.needle.33percent" }
         if percentage <= 10 { return "exclamationmark.circle.fill" }
@@ -71,9 +85,17 @@ final class UsageStore: ObservableObject {
 
     private func scheduleRefresh() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.refresh() }
-        }
+        timer = Timer.scheduledTimer(
+            timeInterval: refreshInterval,
+            target: self,
+            selector: #selector(refreshTimerFired(_:)),
+            userInfo: nil,
+            repeats: true
+        )
         timer?.tolerance = min(5, refreshInterval * 0.1)
+    }
+
+    @objc private func refreshTimerFired(_ timer: Timer) {
+        refresh()
     }
 }
