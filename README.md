@@ -76,7 +76,7 @@ Open a bug report with your macOS version, Codex or ChatGPT version, installatio
 
 ## Contributing
 
-Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and use [SECURITY.md](SECURITY.md) for vulnerability reports.
+Contributions are welcome. Keep changes focused, add tests where practical, and run `swift test` plus `swift build -c release` before opening a pull request. Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
 
 ## License and trademarks
 
