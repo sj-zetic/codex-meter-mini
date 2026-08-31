@@ -1,4 +1,4 @@
-# Codex Meter
+# Codex Meter Mini
 
 <p align="center">
   <img src="Sources/CodexMeter/Resources/CodexIcon.png" width="128" alt="Codex Meter app icon">
@@ -46,8 +46,8 @@ Codex Meter looks for the executable in the ChatGPT and Codex application bundle
 ## Build and run
 
 ```sh
-git clone https://github.com/sj-zetic/codex-meter.git
-cd codex-meter
+git clone https://github.com/sj-zetic/codex-meter-mini.git
+cd codex-meter-mini
 make test
 make install
 ```

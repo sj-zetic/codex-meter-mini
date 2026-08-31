@@ -8,7 +8,7 @@ Security fixes are applied to the latest code on `main`. This project does not c
 
 Please use GitHub's private vulnerability reporting for this repository:
 
-<https://github.com/sj-zetic/codex-meter/security/advisories/new>
+<https://github.com/sj-zetic/codex-meter-mini/security/advisories/new>
 
 Do not open a public issue for a vulnerability involving credentials, authentication, local process execution, or private account information. Include reproduction steps, affected versions, impact, and any suggested mitigation. Do not include real tokens, cookies, or account data.
 

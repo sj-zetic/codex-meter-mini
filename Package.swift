@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "CodexMeter",
+    name: "CodexMeterMini",
     platforms: [.macOS(.v13)],
     products: [
         .executable(name: "CodexMeter", targets: ["CodexMeter"])
