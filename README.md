@@ -43,6 +43,8 @@ The local Codex process may communicate with OpenAI as part of its normal operat
 
 Codex Meter looks for the executable in the ChatGPT and Codex application bundles, Homebrew locations, and the current `PATH`.
 
+Both the current desktop app layout (`Resources/codex-cli/bin/codex`, with a nested `CodexCLI.app` fallback) and the older `Resources/codex` layout are supported.
+
 ## Build and run
 
 ```sh
@@ -71,6 +73,8 @@ make install
 - Codex Meter automatically restarts an unresponsive local connection once. If syncing still fails, quit and reopen Codex Meter, then include the displayed error in a bug report.
 
 ### A Codex update broke the app
+
+If syncing stopped after a desktop app update, update this repository with `git pull --ff-only` and run `make install` again. Desktop updates can change the bundled CLI location; restarting an older widget will not fix a missing executable path.
 
 Open a bug report with your macOS version, Codex or ChatGPT version, installation method, and the visible error message. Never include tokens, cookies, or other credentials.
 

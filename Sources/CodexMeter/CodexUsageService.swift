@@ -62,7 +62,7 @@ final class CodexUsageService {
 
     private func startIfNeeded() {
         guard process?.isRunning != true else { return }
-        guard let executable = locateCodex() else {
+        guard let executable = CodexExecutableLocator.locate() else {
             fail("Codex isn’t installed. Install or open the Codex app, then try again.")
             return
         }
@@ -113,21 +113,6 @@ final class CodexUsageService {
         } catch {
             recoverOrFail("Couldn’t start Codex: \(error.localizedDescription)")
         }
-    }
-
-    private func locateCodex() -> String? {
-        let candidates = [
-            "/Applications/ChatGPT.app/Contents/Resources/codex",
-            "/Applications/Codex.app/Contents/Resources/codex",
-            "/opt/homebrew/bin/codex",
-            "/usr/local/bin/codex"
-        ]
-        if let match = candidates.first(where: FileManager.default.isExecutableFile(atPath:)) { return match }
-
-        let path = ProcessInfo.processInfo.environment["PATH"] ?? ""
-        return path.split(separator: ":")
-            .map { String($0) + "/codex" }
-            .first(where: FileManager.default.isExecutableFile(atPath:))
     }
 
     private func nextRequestID() -> Int { defer { nextID += 1 }; return nextID }
